@@ -32,7 +32,13 @@ nnoremap <C-z> :TagbarToggle<CR>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 
-""  plugin manager
+" For the LSP 
+" (Go to .c file, if any)
+nnoremap <leader>d :LspDefinition<CR>
+" (Go to .h file, if any)
+nnoremap <leader>D :LspDeclaration<CR> 
+
+""" Plugin manager
 
 call plug#begin('~/.local/share/nvim/plugged')
 
