@@ -7,9 +7,11 @@ set tabstop=4
 set shiftwidth=4
 set autoindent
 set number
-set cc=100 " line width for good coding practise
+" set cc=100 " line width for good coding practise
 syntax on 
 set showmatch
+set nowrap
+set mouse=a
 
 """ Personal keybindings
 
@@ -38,11 +40,19 @@ nnoremap <leader>d :LspDefinition<CR>
 " (Go to .h file, if any)
 nnoremap <leader>D :LspDeclaration<CR> 
 
+" for folding code 
+" za = fold current indentation
+" zR = unfold everything
+" zM = folds everything
+set foldmethod=indent
+set foldlevelstart=20
+
 """ Plugin manager
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'prabirshrestha/vim-lsp' " I use this plugging for vcj
+Plug 'prabirshrestha/vim-lsp' " I use this plugging for LSP.
+Plug 'mattn/vim-lsp-settings' " Since LSP are hard to install, I use this pluggin to do it !
 Plug 'Shougo/deoplete.nvim' " autocompletion 1 
 Plug 'lighttiger2505/deoplete-vim-lsp' " autocompletion 2
 Plug 'preservim/nerdtree' " File Explorer for VIM
