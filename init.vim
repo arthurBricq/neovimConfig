@@ -7,7 +7,6 @@ set tabstop=4
 set shiftwidth=4
 set autoindent
 set number
-" set cc=100 " line width for good coding practise
 syntax on 
 set showmatch
 set nowrap
@@ -56,10 +55,11 @@ Plug 'mattn/vim-lsp-settings' " Since LSP are hard to install, I use this pluggi
 Plug 'Shougo/deoplete.nvim' " autocompletion 1 
 Plug 'lighttiger2505/deoplete-vim-lsp' " autocompletion 2
 Plug 'preservim/nerdtree' " File Explorer for VIM
-Plug 'preservim/tagbar'
-Plug 'jiangmiao/auto-pairs'
+Plug 'preservim/tagbar' " Function outline
+Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'preservim/nerdcommenter' 
 
 " setting with vim-lsp
 if executable('ccls')
