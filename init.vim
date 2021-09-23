@@ -9,8 +9,15 @@ set autoindent
 set number
 syntax on 
 set showmatch
-set nowrap
 set mouse=a
+
+" Wrap only for markdown files
+set nowrap
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+augroup END
+
 
 """ Personal keybindings
 
@@ -60,6 +67,22 @@ Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdcommenter' 
+Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
+Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
+
+"""Setting up the iPython plugin
+
+" Function to run a qtconsole
+command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
+
+let g:ipy_celldef = '^##' " regex for cell start and end
+
+" Useful keybindings
+nmap <silent> <leader>jqt :RunQtConsole<Enter>
+nmap <silent> <leader>jk :IPython<Space>--existing<Space>--no-window<Enter>
+nmap <silent> <leader>jc <Plug>(IPy-RunCell)
+nmap <silent> <leader>ja <Plug>(IPy-RunAll)
+nmap <silent> <leader>jw <Plug>(IPy-Terminate)
 
 " setting with vim-lsp
 if executable('ccls')
