@@ -1,4 +1,8 @@
-""" Personal options
+if exists('g:vscode')
+	finish 
+endif 
+
+" Personal options
 let mapleader = ","
 
 set ignorecase " ignore case when searching
@@ -67,7 +71,6 @@ nnoremap <C-z> :TagbarToggle<CR>
 " Shorcuts for my fuzzy finder 
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-
 
 nnoremap <C-s> :!/home/arthur/softwares/perso/gp.sh "Updates from vim."<CR>
 
