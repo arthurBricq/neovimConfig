@@ -45,9 +45,9 @@ endfunction
 
 " jump to the previous function
 nnoremap <silent> [f :call search('\(\(if\\|for\\|while\\|switch\\|catch\)\_s*\)\@64<!(\_[^)]*)\_[^;{}()]*\zs{', "bw")<CR>
+	
 " jump to the next function
 nnoremap <silent> ]f :call search('\(\(if\\|for\\|while\\|switch\\|catch\)\_s*\)\@64<!(\_[^)]*)\_[^;{}()]*\zs{', "w")<CR>
-
 
 " map ctrl+d to open a terminal to the right
 noremap <C-d> :vertical :botright :terminal<CR>
@@ -67,6 +67,9 @@ nnoremap <C-z> :TagbarToggle<CR>
 " Shorcuts for my fuzzy finder 
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+
+
+nnoremap <C-s> :!/home/arthur/softwares/perso/gp.sh "Updates from vim: "<CR>
 
 " For the LSP 
 " (Go to .c file, if any)
@@ -97,8 +100,6 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdcommenter' 
 Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
-Plug 'tpope/vim-fugitive' " Vim Plugin 
-
 
 """Setting up the iPython plugin
 
