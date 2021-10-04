@@ -69,7 +69,7 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 
 
-nnoremap <C-s> :!/home/arthur/softwares/perso/gp.sh "Updates from vim: "<CR>
+nnoremap <C-s> :!/home/arthur/softwares/perso/gp.sh "Updates from vim."<CR>
 
 " For the LSP 
 " (Go to .c file, if any)
