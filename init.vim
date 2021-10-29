@@ -62,6 +62,9 @@ nnoremap <esc><esc> :noh<return>
 " Toogle the Tree Explorer
 nnoremap <C-t> :NERDTreeToggle<CR>
 
+" Have the same Tree Explorer on each windows 
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
@@ -103,6 +106,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdcommenter' 
 Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
+Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 
 """Setting up the iPython plugin
 
