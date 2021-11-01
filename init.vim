@@ -47,6 +47,9 @@ function! AutoHighlightToggle()
  endif
 endfunction
 
+" Search and Replace selected text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 " jump to the previous function
 nnoremap <silent> [f :call search('\(\(if\\|for\\|while\\|switch\\|catch\)\_s*\)\@64<!(\_[^)]*)\_[^;{}()]*\zs{', "bw")<CR>
 	
