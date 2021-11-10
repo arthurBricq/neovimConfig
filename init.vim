@@ -68,8 +68,9 @@ nnoremap <esc><esc> :noh<return>
 nnoremap <C-z> :TagbarToggle<CR>
 
 " Shorcuts for my fuzzy finder 
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>ff <cmd>:Files<cr>
+nnoremap <leader>fg <cmd>:Rg<cr>
+
 
 " Git push shortcut
 nnoremap <C-s> :!/home/arthur/softs/perso/gp.sh "Updates from vim."<CR>
@@ -105,8 +106,11 @@ Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'preservim/nerdtree' " File Explorer for VIM
 Plug 'preservim/tagbar' " Function outline
 Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
-Plug 'nvim-lua/plenary.nvim' " For other plugings
-Plug 'nvim-telescope/telescope.nvim'  " Fuzzy finder
+
+" This two pluggin are for the uzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 Plug 'preservim/nerdcommenter' " Commenter
 Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
@@ -203,7 +207,7 @@ let g:nvim_tree_icons = {
     \ 'symlink': '',
     \ 'folder': {
     \   'arrow_open': "",
-    \   'arrow_closed': "",
+    \   'arrow_closed': ">",
     \   'default': "",
     \   'open': "",
     \   'empty': "",
@@ -225,7 +229,7 @@ highlight NvimTreeFolderIcon guibg=blue
 
 
 lua <<EOF
-require'nvim-tree'.setup {
+require('nvim-tree').setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -272,5 +276,4 @@ require'nvim-tree'.setup {
     }
   }
 }
-
 EOF
