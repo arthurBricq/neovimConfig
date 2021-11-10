@@ -94,11 +94,6 @@ let g:airline_theme='light'
 """ Plugin manager
 
 call plug#begin('~/.local/share/nvim/plugged')
-
-"Plug 'prabirshrestha/vim-lsp' " I use this plugging for LSP.
-"Plug 'mattn/vim-lsp-settings' " Since LSP are hard to install, I use this pluggin to do it !
-"Plug 'lighttiger2505/deoplete-vim-lsp' " autocompletion 2
-"
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocompletioon: back-end
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -106,49 +101,46 @@ Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'preservim/nerdtree' " File Explorer for VIM
 Plug 'preservim/tagbar' " Function outline
 Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
-
 " This two pluggin are for the uzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
 Plug 'preservim/nerdcommenter' " Commenter
 Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
 Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+call plug#end()
 
-"""Setting up the iPython plugin
+" Change the fuzzy finder command 
+"command! -bang -nargs=* Rg
+  "\ call fzf#vim#grep(
+  "\   'rg --column --line-number --no-heading --color=always --smart-case -u -- '.shellescape(<q-args>), 1,
+  "\   fzf#vim#with_preview(), <bang>0)
+" Preview window on the upper side of the window with 40% height,
+" hidden by default, ctrl-/ to toggle
+let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+
+command! -bang -nargs=* Rgc
+     \ call fzf#vim#grep("rg --column --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right', 'ctrl-/'), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   "rg --column --line-number --no-heading --color=always --smart-case -u -- ".shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('up', 'ctrl-/'), 1)
+
+
 
 " Function to run a qtconsole
 command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
-
 let g:ipy_celldef = '^##' " regex for cell start and end
-
-" Useful keybindings
 nmap <silent> <leader>jqt :RunQtConsole<Enter>
 nmap <silent> <leader>jk :IPython<Space>--existing<Space>--no-window<Enter>
 nmap <silent> <leader>jc <Plug>(IPy-RunCell)
 nmap <silent> <leader>ja <Plug>(IPy-RunAll)
 nmap <silent> <leader>jw <Plug>(IPy-Terminate)
 
-" setting with vim-lsp
-if executable('ccls')
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'ccls',
-      \ 'cmd': {server_info->['ccls']},
-      \ 'root_uri': {server_info->lsp#utils#path_to_uri(
-      \   lsp#utils#find_nearest_parent_file_directory(
-      \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
-      \ 'initialization_options': {
-      \   'highlight': { 'lsRanges' : v:true },
-      \   'cache': {'directory': stdpath('cache') . '/ccls' },
-      \ },
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-      \ })
-endif
 
-call plug#end()
 
 """ Autocomplete
 
