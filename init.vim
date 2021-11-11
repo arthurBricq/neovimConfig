@@ -114,6 +114,9 @@ let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 set foldmethod=indent
 set foldlevelstart=20
 
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
 " Pick the theme to use 
 let g:airline_theme='light'
 
