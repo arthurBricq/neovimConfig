@@ -1,4 +1,4 @@
-# NeoVIM Config
+#NvimTreeToggle NeoVIM Config
 
 This repo contains my configuration for NeoVim.
 
