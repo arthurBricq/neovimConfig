@@ -25,6 +25,7 @@ Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
 Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/argtextobj.vim' " Plugin to add 'argument' as text object
 call plug#end()
 
 
@@ -96,7 +97,7 @@ nnoremap <leader>ff <cmd>:Files<cr>
 nnoremap <leader>fg <cmd>:Rg<cr>
 
 " Git push shortcut
-nnoremap <C-s> :!/home/arthur/softs/perso/gp.sh "Updates from vim."<CR>
+nnoremap <C-s> :!/usr/bin/gp.sh "Updates from vim."<CR>
 
 " For the LSP 
 " (Go to .c file, if any)
