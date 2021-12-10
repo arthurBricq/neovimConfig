@@ -3,30 +3,44 @@ if exists('g:vscode')
 	finish 
 endif 
 
-
 """ Plugin manager
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocompletioon: back-end
+
+" Autocompletion Plugins
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocompletion: back-end
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
+
+" python setup
+Plug 'hkupty/iron.nvim' "Plugin to connect with REPL (IPython) 
+Plug 'kana/vim-textobj-user' "To recognize python cell
+Plug 'GCBallesteros/vim-textobj-hydrogen' "To recognize python cell
+
+" Layout plugins
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'preservim/nerdtree' " File Explorer for VIM
 Plug 'jistr/vim-nerdtree-tabs' " Second pluging to have the same tree on all tabs
 Plug 'ryanoasis/vim-devicons' " Icons for NeerTree
 Plug 'preservim/tagbar' " Function outline
-Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " This two pluggin are for the uzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" Plugins to handle the writing / text
+Plug 'jiangmiao/auto-pairs' " To close parenthesis, ...
 Plug 'preservim/nerdcommenter' " Commenter
-Plug 'bfredl/nvim-ipy' " Python Kernel in Vim
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
-Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/argtextobj.vim' " Plugin to add 'argument' as text object
+
+" Additional Plugins
+Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 call plug#end()
+
+luafile $HOME/.config/nvim/plugins.lua
 
 " Clang completion for C++
 " Add in your CMake the line: set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -40,7 +54,10 @@ set completeopt-=preview
 
 """ Personal options
 
+tnoremap <Esc> <C-\><C-n>
+
 let mapleader = ","
+let localleader = ","
 set ignorecase " ignore case when searching
 set hlsearch "highlight when searching a word
 set tabstop=4
@@ -100,9 +117,22 @@ nnoremap <esc><esc> :noh<return>
 " Toggle the TagBar (outline)
 nnoremap <C-z> :TagbarToggle<CR>
 
+" Toggle the Tree Explorer
+noremap <C-b> :NERDTreeTabsToggle<CR>
+let NERDTreeMapOpenInTab='<C-t>'
+
 " Shorcuts for my fuzzy finder 
 nnoremap <leader>ff <cmd>:Files<cr>
 nnoremap <leader>fg <cmd>:Rg<cr>
+
+" Change the fuzzy finder command 
+"command! -bang -nargs=* Rg
+  "\ call fzf#vim#grep(
+  "\   'rg --column --line-number --no-heading --color=always --smart-case -u -- '.shellescape(<q-args>), 1,
+  "\   fzf#vim#with_preview(), <bang>0)
+" Preview window on the upper side of the window with 40% height,
+" hidden by default, ctrl-/ to toggle
+let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
 
 " Git push shortcut
 nnoremap <C-s> :!/usr/bin/gp.sh "Updates from vim."<CR>
@@ -112,7 +142,6 @@ nnoremap <C-s> :!/usr/bin/gp.sh "Updates from vim."<CR>
 nnoremap <leader>d :LspDefinition<CR>
 " (Go to .h file, if any)
 nnoremap <leader>D :LspDeclaration<CR> 
-
 " LSP Config 
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 
@@ -129,15 +158,6 @@ let g:deoplete#enable_at_startup = 1
 " Pick the theme to use 
 let g:airline_theme='light'
 
-" Change the fuzzy finder command 
-"command! -bang -nargs=* Rg
-  "\ call fzf#vim#grep(
-  "\   'rg --column --line-number --no-heading --color=always --smart-case -u -- '.shellescape(<q-args>), 1,
-  "\   fzf#vim#with_preview(), <bang>0)
-" Preview window on the upper side of the window with 40% height,
-" hidden by default, ctrl-/ to toggle
-let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
-
 command! -bang -nargs=* Rgc
      \ call fzf#vim#grep("rg --column --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right', 'ctrl-/'), <bang>0)
 
@@ -146,15 +166,31 @@ command! -bang -nargs=* Rg
   \   "rg --column --line-number --no-heading --color=always --smart-case -u -- ".shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('up', 'ctrl-/'), 1)
 
-" Function to run a qtconsole
-command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
-let g:ipy_celldef = '^##' " regex for cell start and end
-nmap <silent> <leader>jqt :RunQtConsole<Enter>
-nmap <silent> <leader>jk :IPython<Space>--existing<Space>--no-window<Enter>
-nmap <silent> <leader>jc <Plug>(IPy-RunCell)
-nmap <silent> <leader>ja <Plug>(IPy-RunAll)
-nmap <silent> <leader>jw <Plug>(IPy-Terminate)
 
-" For the Tree Explorer
-noremap <C-b> :NERDTreeTabsToggle<CR>
-let NERDTreeMapOpenInTab='<C-t>'
+
+" IPython (Iron.Nvim)
+
+" Open the terminal
+nmap <silent> <leader>jo :IronRepl<Enter>
+
+" Run a cell
+nmap <silent> <leader>jc vihctr<CR>
+
+" Send cell to IronRepl and move to next cell.
+" Depends on the text object defined in vim-textobj-hydrogen
+" You first need to be connected to IronRepl
+nmap ]x ctrih/^# %%<CR><CR>
+
+
+" In the future, I can edit Iron.nvim plugins from this link: https://github.com/hkupty/iron.nvim/blob/bcea4d3ebfc0aa3187de4166c764a600bc81729b/doc/iron.txt#L172
+
+
+" Function to run a qtconsole
+"command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
+"let g:ipy_celldef = '^##' " regex for cell start and end
+"nmap <silent> <leader>jqt :RunQtConsole<Enter>
+"nmap <silent> <leader>jk :IPython<Space>--existing<Space>--no-window<Enter>
+"nmap <silent> <leader>jc <Plug>(IPy-RunCell)
+"nmap <silent> <leader>ja <Plug>(IPy-RunAll)
+"nmap <silent> <leader>jw <Plug>(IPy-Terminate)
+
