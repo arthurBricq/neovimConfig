@@ -166,15 +166,20 @@ command! -bang -nargs=* Rg
   \   "rg --column --line-number --no-heading --color=always --smart-case -u -- ".shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('up', 'ctrl-/'), 1)
 
-
-
 " IPython (Iron.Nvim)
 
 " Open the terminal
 nmap <silent> <leader>jo :IronRepl<Enter>
 
 " Run a cell
-nmap <silent> <leader>jc vihctr<CR>
+nmap <silent> <leader>jc vihctr/^# %%<CR>
+
+" Run a line
+nmap <silent> <leader>jx 0v$ctr<CR>
+
+" Run everything
+nmap <silent> <leader>ja ggVGctr<CR>
+
 
 " Send cell to IronRepl and move to next cell.
 " Depends on the text object defined in vim-textobj-hydrogen
