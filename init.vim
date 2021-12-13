@@ -54,7 +54,6 @@ set completeopt-=preview
 
 """ Personal options
 
-tnoremap <Esc> <C-\><C-n>
 
 let mapleader = ","
 let localleader = ","
@@ -168,6 +167,10 @@ command! -bang -nargs=* Rg
 
 """ IPython (Iron.Nvim) settings
 " In the future, I can edit Iron.nvim plugins from this link: https://github.com/hkupty/iron.nvim/blob/bcea4d3ebfc0aa3187de4166c764a600bc81729b/doc/iron.txt#L172
+
+" Use Esc to leave the terminal window
+tnoremap <Esc> <C-\><C-n><C-w><C-w>
+
 
 " Always the terminal in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
