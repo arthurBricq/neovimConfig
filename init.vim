@@ -166,7 +166,11 @@ command! -bang -nargs=* Rg
   \   "rg --column --line-number --no-heading --color=always --smart-case -u -- ".shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('up', 'ctrl-/'), 1)
 
-" IPython (Iron.Nvim)
+""" IPython (Iron.Nvim) settings
+" In the future, I can edit Iron.nvim plugins from this link: https://github.com/hkupty/iron.nvim/blob/bcea4d3ebfc0aa3187de4166c764a600bc81729b/doc/iron.txt#L172
+
+" Always the terminal in insert mode
+autocmd BufWinEnter,WinEnter term://* startinsert
 
 " Open the terminal
 nmap <silent> <leader>jo :IronRepl<Enter>
@@ -180,16 +184,12 @@ nmap <silent> <leader>jx 0v$ctr<CR>
 " Run everything
 nmap <silent> <leader>ja ggVGctr<CR>
 
-
 " Send cell to IronRepl and move to next cell.
 " Depends on the text object defined in vim-textobj-hydrogen
 " You first need to be connected to IronRepl
 nmap ]x ctrih/^# %%<CR><CR>
 
-
-" In the future, I can edit Iron.nvim plugins from this link: https://github.com/hkupty/iron.nvim/blob/bcea4d3ebfc0aa3187de4166c764a600bc81729b/doc/iron.txt#L172
-
-
+" OLD
 " Function to run a qtconsole
 "command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
 "let g:ipy_celldef = '^##' " regex for cell start and end
