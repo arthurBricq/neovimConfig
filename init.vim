@@ -171,7 +171,6 @@ command! -bang -nargs=* Rg
 " Use Esc to leave the terminal window
 tnoremap <Esc> <C-\><C-n><C-w><C-w>
 
-
 " Always the terminal in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
 
@@ -179,7 +178,7 @@ autocmd BufWinEnter,WinEnter term://* startinsert
 nmap <silent> <leader>jo :IronRepl<Enter>
 
 " Run a cell
-nmap <silent> <leader>jc vihctr/^# %%<CR>
+nmap <silent> <leader>jc vihctr<CR>
 
 " Run a line
 nmap <silent> <leader>jx 0v$ctr<CR>
