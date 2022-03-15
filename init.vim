@@ -13,9 +13,11 @@ Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
 
 " python setup
-Plug 'hkupty/iron.nvim' "Plugin to connect with REPL (IPython) 
-Plug 'kana/vim-textobj-user' "To recognize python cell
-Plug 'GCBallesteros/vim-textobj-hydrogen' "To recognize python cell
+"Plug 'hkupty/iron.nvim' "Plugin to connect with REPL (IPython) 
+"Plug 'kana/vim-textobj-user' "To recognize python cell
+"Plug 'GCBallesteros/vim-textobj-hydrogen' "To recognize python cell
+Plug 'jpalardy/vim-slime', { 'for': 'python' }
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 
 " Layout plugins
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -40,7 +42,28 @@ Plug 'vim-scripts/argtextobj.vim' " Plugin to add 'argument' as text object
 Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 call plug#end()
 
-luafile $HOME/.config/nvim/plugins.lua
+""" SLIME configurations + cim-ipython-cell
+" https://github.com/jpalardy/vim-slime#neovim-terminal
+" https://github.com/hanschen/vim-ipython-cell
+" (Python)
+let g:slime_target = "neovim"
+let g:slime_paste_file = "$HOME/.slime_paste"
+
+" 'tt' used to create the IPython terminal
+fun! StartREPL(repl)
+  execute 'terminal '.a:repl
+  setlocal nonumber
+  let t:term_id = b:terminal_job_id
+  wincmd p
+  execute 'let b:slime_config = {"jobid": "'.t:term_id . '"}'
+endfun
+noremap <silent> tt :vsplit<bar>:call StartREPL('ipython')<CR>
+
+" Other very useful commands
+nnoremap <Leader>r :IPythonCellRun<CR>
+nnoremap <Leader>c :IPythonCellExecuteCell<CR>
+nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
+nnoremap <Leader>x :IPythonCellClose<CR>
 
 " Clang completion for C++
 " Add in your CMake the line: set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -53,7 +76,6 @@ set completeopt-=preview
 
 
 """ Personal options
-
 
 let mapleader = ","
 let localleader = ","
@@ -120,6 +142,9 @@ nnoremap <C-z> :TagbarToggle<CR>
 noremap <C-b> :NERDTreeTabsToggle<CR>
 let NERDTreeMapOpenInTab='<C-t>'
 
+" Sorting of tabexplore 
+let NERDTreeSortOrder = ['[[extension]]']
+
 " Shorcuts for my fuzzy finder 
 nnoremap <leader>ff <cmd>:Files<cr>
 nnoremap <leader>fg <cmd>:Rg<cr>
@@ -173,31 +198,4 @@ tnoremap <Esc> <C-\><C-n><C-w><C-w>
 
 " Always the terminal in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
-
-" Open the terminal
-nmap <silent> <leader>jo :IronRepl<Enter>
-
-" Run a cell
-nmap <silent> <leader>jc vihctr<CR>
-
-" Run a line
-nmap <silent> <leader>jx 0v$ctr<CR>
-
-" Run everything
-nmap <silent> <leader>ja ggVGctr<CR>
-
-" Send cell to IronRepl and move to next cell.
-" Depends on the text object defined in vim-textobj-hydrogen
-" You first need to be connected to IronRepl
-nmap ]x ctrih/^# %%<CR><CR>
-
-" OLD
-" Function to run a qtconsole
-"command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --JupyterWidget.include_other_output=True")
-"let g:ipy_celldef = '^##' " regex for cell start and end
-"nmap <silent> <leader>jqt :RunQtConsole<Enter>
-"nmap <silent> <leader>jk :IPython<Space>--existing<Space>--no-window<Enter>
-"nmap <silent> <leader>jc <Plug>(IPy-RunCell)
-"nmap <silent> <leader>ja <Plug>(IPy-RunAll)
-"nmap <silent> <leader>jw <Plug>(IPy-Terminate)
 
