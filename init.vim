@@ -38,32 +38,8 @@ Plug 'preservim/nerdcommenter' " Commenter
 Plug 'dhruvasagar/vim-table-mode' " For Makdown Tables
 Plug 'vim-scripts/argtextobj.vim' " Plugin to add 'argument' as text object
 
-" Additional Plugins
-Plug 'github/copilot.vim' " Vim Github Copilot Plugin 
 call plug#end()
 
-""" SLIME configurations + cim-ipython-cell
-" https://github.com/jpalardy/vim-slime#neovim-terminal
-" https://github.com/hanschen/vim-ipython-cell
-" (Python)
-let g:slime_target = "neovim"
-let g:slime_paste_file = "$HOME/.slime_paste"
-
-" 'tt' used to create the IPython terminal
-fun! StartREPL(repl)
-  execute 'terminal '.a:repl
-  setlocal nonumber
-  let t:term_id = b:terminal_job_id
-  wincmd p
-  execute 'let b:slime_config = {"jobid": "'.t:term_id . '"}'
-endfun
-noremap <silent> tt :vsplit<bar>:call StartREPL('ipython')<CR>
-
-" Other very useful commands
-nnoremap <Leader>r :IPythonCellRun<CR>
-nnoremap <Leader>c :IPythonCellExecuteCell<CR>
-nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
-nnoremap <Leader>x :IPythonCellClose<CR>
 
 " Clang completion for C++
 " Add in your CMake the line: set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -199,3 +175,29 @@ tnoremap <Esc> <C-\><C-n><C-w><C-w>
 " Always the terminal in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
 
+""" SLIME configurations + cim-ipython-cell
+" https://github.com/jpalardy/vim-slime#neovim-terminal
+" https://github.com/hanschen/vim-ipython-cell
+" (Python)
+let g:slime_target = "neovim"
+let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slime_python_ipython = 1
+
+" 'tt' used to create the IPython terminal
+fun! StartREPL(repl)
+  execute 'terminal '.a:repl
+  setlocal nonumber
+  let t:term_id = b:terminal_job_id
+  wincmd p
+  execute 'let b:slime_config = {"jobid": "'.t:term_id . '"}'
+endfun
+noremap <silent> tt :vsplit<bar>:call StartREPL('ipython --matplotlib')<CR>
+
+" Other very useful commands
+nnoremap <Leader>r :IPythonCellRun<CR>
+nnoremap <Leader>c :IPythonCellExecuteCell<CR>
+nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
+nnoremap <Leader>x :IPythonCellClose<CR>
+
+" NERD Commenter to behave like my VSCode 
+map <C-k> <Plug>NERDCommenterToggle
